@@ -1,0 +1,14 @@
+{
+    "workbench.colorTheme": "Default High Contrast",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "none",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "github.copilot.nextEditSuggestions.enabled": true,
+
+    "terminal.integrated.profiles.linux": {
+        "zsh": {
+            "path": "/usr/sbin/zsh"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "zsh"
+}

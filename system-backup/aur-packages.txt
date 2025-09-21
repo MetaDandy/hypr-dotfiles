@@ -1,0 +1,7 @@
+microsoft-edge-stable-bin
+postman-bin
+snapd
+vesktop-bin
+visual-studio-code-bin
+yay
+yay-debug
