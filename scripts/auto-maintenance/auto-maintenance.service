@@ -1,0 +1,6 @@
+[Unit]
+Description=auto-maintenance weekly service
+
+[Service]
+Type=oneshot
+ExecStart=%h/auto-maintenance.sh

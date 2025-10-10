@@ -1,0 +1,9 @@
+[Unit]
+Description=Execute weekly maintenance
+
+[Timer]
+OnCalendar=Sun
+Persistent=true
+
+[Install]
+WantedBy=timers.target
