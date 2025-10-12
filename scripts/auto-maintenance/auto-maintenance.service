@@ -3,4 +3,4 @@ Description=auto-maintenance weekly service
 
 [Service]
 Type=oneshot
-ExecStart=%h/auto-maintenance.sh
+ExecStart=/usr/local/bin/auto-maintenance.sh

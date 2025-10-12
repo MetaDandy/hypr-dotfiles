@@ -1,56 +1,77 @@
 # Auto Maintenance
 
-This system performs automatic weekly maintenance using systemd and a bash script.
+This system performs automatic weekly maintenance on your Linux system using systemd and a bash script.  
+Now, the service and timer run at the **system level** for administrative tasks.
 
 ## Included files
 
 - `auto-maintenance.sh`: Maintenance script.
 - `auto-maintenance.service`: systemd service to run the script.
 - `auto-maintenance.timer`: systemd timer to schedule weekly execution.
+- `99-grub.hook` (optional): Pacman hook to automatically update GRUB after kernel or GRUB package changes.
 
-## Installation
+## Installation (System Level)
 
-1. **Copy the files to your user directory:**
+1. **Copy the script and unit files to system locations:**
 
 ```bash
-cp auto-maintenance.sh ~/
-mkdir -p ~/.config/systemd/user/
-cp auto-maintenance.service ~/.config/systemd/user/
-cp auto-maintenance.timer ~/.config/systemd/user/
-chmod +x ~/auto-maintenance.sh
+sudo cp auto-maintenance.sh /usr/local/bin/
+sudo chmod +x /usr/local/bin/auto-maintenance.sh
+sudo cp auto-maintenance.service /etc/systemd/system/
+sudo cp auto-maintenance.timer /etc/systemd/system/
 ```
 
-2. **Reload user systemd services:**
+2. **(Optional) Install the GRUB pacman hook:**
+
+If your system does **not** automatically update GRUB after kernel upgrades, copy the hook:
 
 ```bash
-systemctl --user daemon-reload
+sudo cp 99-grub.hook /etc/pacman.d/hooks/
 ```
 
-3. **Enable and start the timer:**
+This hook ensures that after updating or installing the kernel or GRUB, your GRUB configuration is regenerated.
+
+3. **Reload systemd services:**
 
 ```bash
-systemctl --user enable --now auto-maintenance.timer
+sudo systemctl daemon-reload
 ```
 
-4. **Check that the timer is active:**
+4. **Enable and start the timer:**
 
 ```bash
-systemctl --user list-timers
+sudo systemctl enable --now auto-maintenance.timer
+```
+
+5. **Check that the timer is active:**
+
+```bash
+systemctl list-timers
 ```
 
 ## Manual execution
 
-To run the maintenance manually:
+To run the maintenance manually as root:
 
 ```bash
-bash ~/auto-maintenance.sh
+sudo /usr/local/bin/auto-maintenance.sh
 ```
 
 ## Notes
 
 - The script only runs on Sundays.
+- The service runs as root, so administrative commands work without password prompts.
 - Check logs with:
 
 ```bash
-journalctl --user -u auto-maintenance.service
+journalctl -u auto-maintenance.service
 ```
+
+---
+
+## About the GRUB Hook (`99-grub.hook`)
+
+Some custom or minimal installations may not automatically update GRUB after kernel upgrades.  
+If that's your case, you can use the provided `99-grub.hook` file.  
+Copy it to `/etc/pacman.d/hooks/` as shown above.  
+This is **optional** and only needed if your system does not already handle GRUB updates automatically.
