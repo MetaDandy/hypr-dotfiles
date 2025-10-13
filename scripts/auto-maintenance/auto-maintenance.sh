@@ -32,7 +32,7 @@ npm cache clean --force >/dev/null 2>&1
 yarn cache clean >/dev/null 2>&1
 go clean -modcache -cache -testcache >/dev/null 2>&1
 
-rm -rf ~/.npm ~/.cache/npm ~/.cache/yarn ~/go/pkg ~/go/bin 2>/dev/null
+rm -rf ~/.npm ~/.cache/npm ~/.cache/yarn 2>/dev/null
 sudo journalctl --vacuum-time=7d >/dev/null 2>&1
 sudo rm -rf /tmp/* 2>/dev/null
 
